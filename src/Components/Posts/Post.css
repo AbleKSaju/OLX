@@ -21,17 +21,17 @@
   color: #002f34;
 }
 
-.recommendations .cards {
+.recommendations .cardss{
   display: flex;
 }
 
-.moreView .cards {
+.moreView .cardss {
   white-space: nowrap;
   overflow-x: scroll;
   overflow-y: hidden;
 }
 
-.card {
+.cards {
   margin-right: 15px;
   padding: 13px;
   max-width: 222px;
@@ -41,37 +41,37 @@
   cursor: pointer;
 }
 
-.card .favorite {
+.cards .favorite {
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
 
-.card .image {
+.cards .image {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.card .image img {
+.cards .image img {
   height: 100px;
   max-width: 100%;
   max-height: 100%;
   min-height: 100%;
   text-align: center;
 }
-.card .content .rate {
+.cards .content .rate {
   margin-top: 10px;
   font-size: larger;
   font-weight: bold;
 }
-.card .content .kilometer {
+.cards .content .kilometer {
   font-size: medium;
 }
-.card .content .name {
+.cards .content .name {
   font-size: small;
 }
-.card .date {
+.cards .date {
   display: flex;
   justify-content: flex-end;
   font-size: small;

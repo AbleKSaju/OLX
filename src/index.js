@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { FirebaseContext } from "./store/FireBaseContext";
 import { Context } from "./store/FireBaseContext";
 import firebase from "./firebase/config";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 

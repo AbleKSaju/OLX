@@ -1,9 +1,47 @@
-import React from 'react';
-
+import React, { useState } from 'react';
+import { useEffect,useContext } from 'react';
 import Heart from '../../assets/Heart';
 import './Post.css';
+import { FirebaseContext } from '../../store/FireBaseContext';
+import { useNavigate } from 'react-router-dom';
+import { postContext } from '../../store/PostContext';
 
-function Posts() {
+function Posts({input}) {
+  const [inp, setInp] = useState('');
+  useEffect(() => {
+    if (input) {
+      setInp(input);
+    }else{
+      setInp('')
+    }
+  },[input]);
+
+const {firebase} = useContext(FirebaseContext)
+const [products,setProducts]=useState([])
+const {setPostDetails} = useContext(postContext)
+const navigate=useNavigate()
+
+useEffect(() => {
+  firebase.firestore().collection('products').get().then((snapshot) => {
+    const allPosts = snapshot.docs.map((product) => {
+      if (inp) {
+        if (product.data().name.includes(inp)) {
+        return {
+          ...product.data(),
+          id: product.id
+        };
+      }
+      }else{
+        return{
+          ...product.data(),
+          id:product.id
+         } 
+      }
+    })
+    setProducts(allPosts);
+  });
+}, [input,inp]);
+
 
   return (
     <div className="postParentDiv">
@@ -12,33 +50,43 @@ function Posts() {
           <span>Quick Menu</span>
           <span>View more</span>
         </div>
-        <div className="cards">
-          <div
-            className="card"
+        <div className="cardss">
+          {products.map((product)=>(
+            product?(
+              <div
+              key={product.id}
+            className="cards"
+            onClick={() => {
+              setPostDetails(product);
+              navigate('/view');
+            }}
           >
             <div className="favorite">
               <Heart></Heart>
             </div>
             <div className="image">
-              <img src="../../../Images/R15V3.jpg" alt="" />
+              <img src={product?.url} alt="" />
             </div>
             <div className="content">
-              <p className="rate">&#x20B9; 250000</p>
-              <span className="kilometer">Two Wheeler</span>
-              <p className="name"> YAMAHA R15V3</p>
+              <p className="rate">&#x20B9; {product?.price}</p>
+              <span className="kilometer">{product?.name}</span>
+              <p className="name">{product?.category} </p>
             </div>
             <div className="date">
-              <span>Tue May 04 2021</span>
+              <span>{product?.createdAt}</span>
             </div>
           </div>
+          ):null))}
+       
+               
         </div>
       </div>
       <div className="recommendations">
         <div className="heading">
           <span>Fresh recommendations</span>
         </div>
-        <div className="cards">
-          <div className="card">
+        <div className="cardss">
+          <div className="cards">
             <div className="favorite">
               <Heart></Heart>
             </div>

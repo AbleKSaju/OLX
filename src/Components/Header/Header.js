@@ -8,10 +8,19 @@ import SellButton from '../../assets/SellButton';
 import SellButtonPlus from '../../assets/SellButtonPlus';
 import { AuthContext, FirebaseContext } from '../../store/FireBaseContext';
 import { useNavigate } from 'react-router-dom';
-function Header() {
+function Header({productInput}) {
   const navigate=useNavigate()
   const {user}=useContext(AuthContext)
   const {firebase}=useContext(FirebaseContext)
+  const navigateToLogin=()=>{
+    console.log(user);
+    if (!user) {
+      navigate('/login')
+    }else{
+      console.log('userExist');
+    }
+  }
+
   return (
     <div className="headerParentDiv">
       <div className="headerChildDiv">
@@ -27,6 +36,7 @@ function Header() {
           <div className="input">
             <input
               type="text"
+              onChange={(e)=>{productInput(e.target.value)}}
               placeholder="Find car,mobile phone and more..."
             />
           </div>
@@ -39,7 +49,7 @@ function Header() {
           <Arrow></Arrow>
         </div>
         <div className="loginPage">
-          <span>{user ? user.displayName:'Login'}</span>
+          <span onClick={navigateToLogin}>{user ? user.displayName:'Login'}</span>
           <hr />
         </div>
         {user&&<span onClick={()=>{

@@ -17,10 +17,13 @@ function Login() {
       alert(err.message)
     })
   }
+  const navigateToSignup=()=>{
+    history('/signup')
+  }
   return (
     <div>
-      <div className="loginParentDiv">
-        <img width="200px" height="200px" src={Logo}></img>
+      <div className="loginParentDiv p-5">
+        <img width="200px" height="200px" src={Logo} alt='Logo'></img>
         <form onSubmit={handelLoggin}>
           <label htmlFor="fname">Email</label>
           <br />
@@ -47,9 +50,9 @@ function Login() {
           />
           <br />
           <br />
-          <button>Login</button>
+          <button >Login</button>
         </form>
-        <a>Signup</a>
+        <p className='text-center mt-1' onClick={navigateToSignup}>Signup</p>
       </div>
     </div>
   );

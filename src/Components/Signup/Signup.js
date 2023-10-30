@@ -27,10 +27,13 @@ export default function Signup() {
         })
       })
     }
+    const navigatetoLogin=()=>{
+      navigate('/login')
+    }
   return (
     <div>
-      <div className="signupParentDiv">
-        <img width="200px" height="200px" src={Logo}></img>
+      <div className="signupParentDiv p-5">
+        <img width="200px" height="200px" alt='logo' src={Logo}></img>
         <form onSubmit={handelSubmit}>
           <label htmlFor="fname">Username</label>
           <br />
@@ -83,7 +86,7 @@ export default function Signup() {
           <br />
           <button>Signup</button>
         </form>
-        <a>Login</a>
+        <p onClick={navigatetoLogin} style={{marginTop:'1rem'}}>Login</p>
       </div>
     </div>
   );
