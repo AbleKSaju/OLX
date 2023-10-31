@@ -5,6 +5,7 @@ import "./Post.css";
 import { FirebaseContext } from "../../store/FireBaseContext";
 import { useNavigate } from "react-router-dom";
 import { postContext } from "../../store/PostContext";
+import Shimmers from "../Shimmer/shimmer";
 
 function Posts({ input ,favorite}) {
   const [inp, setInp] = useState("");
@@ -15,6 +16,7 @@ function Posts({ input ,favorite}) {
       setInp("");
     }
   }, [input]);
+
 
   const { firebase } = useContext(FirebaseContext);
   const [products, setProducts] = useState([]);
@@ -55,10 +57,10 @@ function Posts({ input ,favorite}) {
           <span>View more</span>
         </div>
         <div className="cardss">
-          {products.map((product) =>
+          {products.length?products.map((product) =>
             product ? (
               <div className="cards">
-                <div className="favorite" onClick={()=>{favorite(product.id)}}>
+                <div className="favorite" onClick={()=>{favorite(product?.id)}}>
                   <Heart></Heart>
                 </div>
                 <div
@@ -81,8 +83,9 @@ function Posts({ input ,favorite}) {
                   </div>
                 </div>
               </div>
-            ) : null
-          )}
+            ) :null
+          ): <Shimmers/>}
+
         </div>
       </div>
       <div className="recommendations">

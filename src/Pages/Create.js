@@ -2,11 +2,12 @@ import React, { Fragment } from 'react';
 import Header from '../Components/Header/Header';
 import Create from '../Components/Create/Create';
 
-const CreatePage = () => {
+const CreatePage = ({AddProduct}) => {
+
   return (
     <Fragment>
       <Header />
-      <Create/>
+      <Create AddProduct={AddProduct}/>
     </Fragment>
   );
 };

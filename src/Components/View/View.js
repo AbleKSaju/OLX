@@ -8,14 +8,14 @@ function View() {
   const { firebase } = useContext(FirebaseContext);
 
   useEffect(() => {
-    const userid = postDetails;
+    const {userId} = postDetails;
     firebase
       .firestore()
       .collection("users")
-      .where("id", "==", userid)
+      .where("id", "==", userId)
       .get()
       .then((res) => {
-        res.forEach((doc) => {
+        res.forEach(doc => {
           setUserDetails(doc.data());
         })
       })

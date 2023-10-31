@@ -5,7 +5,7 @@ import { FirebaseContext,AuthContext } from '../../store/FireBaseContext';
 import { useNavigate } from 'react-router-dom';
 import {useForm} from 'react-hook-form'
 
-const Create = () => {
+const Create = ({AddProduct}) => {
   const {firebase}=useContext(FirebaseContext)
   const {user}=useContext(AuthContext)
   const [name,setName]=useState('')
@@ -15,21 +15,7 @@ const Create = () => {
   const date=new Date()
   const {handleSubmit,register,formState:{errors},reset} = useForm()
   const navigate=useNavigate()
-  // const handleSubmit=()=>{
-    // firebase.storage().ref(`/image/${image.name}`).put(image).then(({ref})=>{
-    //   ref.getDownloadURL().then((url)=>{
-    //     firebase.firestore().collection('products').add({
-    //       name,
-    //       category,
-    //       price,
-    //       url,
-    //       userId:user.uid,
-    //       createdAt:date.toDateString()
-    //     })
-    //   })
-    //   navigate('/')
-    // })
-  // }
+
   const submit=()=>{
     firebase.storage().ref(`/image/${image.name}`).put(image).then(({ref})=>{
       ref.getDownloadURL().then((url)=>{
@@ -42,7 +28,7 @@ const Create = () => {
           createdAt:date.toDateString()
         })
       })
-      reset()
+      AddProduct(true)
       navigate('/')
     })
   }
