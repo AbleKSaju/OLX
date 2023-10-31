@@ -1,46 +1,50 @@
-import React, { useState } from 'react';
-import { useEffect,useContext } from 'react';
-import Heart from '../../assets/Heart';
-import './Post.css';
-import { FirebaseContext } from '../../store/FireBaseContext';
-import { useNavigate } from 'react-router-dom';
-import { postContext } from '../../store/PostContext';
+import React, { useState } from "react";
+import { useEffect, useContext } from "react";
+import Heart from "../../assets/Heart";
+import "./Post.css";
+import { FirebaseContext } from "../../store/FireBaseContext";
+import { useNavigate } from "react-router-dom";
+import { postContext } from "../../store/PostContext";
 
-function Posts({input}) {
-  const [inp, setInp] = useState('');
+function Posts({ input ,favorite}) {
+  const [inp, setInp] = useState("");
   useEffect(() => {
     if (input) {
       setInp(input);
-    }else{
-      setInp('')
+    } else {
+      setInp("");
     }
-  },[input]);
+  }, [input]);
 
-const {firebase} = useContext(FirebaseContext)
-const [products,setProducts]=useState([])
-const {setPostDetails} = useContext(postContext)
-const navigate=useNavigate()
+  const { firebase } = useContext(FirebaseContext);
+  const [products, setProducts] = useState([]);
+  const { setPostDetails } = useContext(postContext);
+  const navigate = useNavigate();
 
-useEffect(() => {
-  firebase.firestore().collection('products').get().then((snapshot) => {
-    const allPosts = snapshot.docs.map((product) => {
-      if (inp) {
-        if (product.data().name.includes(inp)) {
-        return {
-          ...product.data(),
-          id: product.id
-        };
-      }
-      }else{
-        return{
-          ...product.data(),
-          id:product.id
-         } 
-      }
-    })
-    setProducts(allPosts);
-  });
-}, [input,inp]);
+  useEffect(() => {
+    firebase
+      .firestore()
+      .collection("products")
+      .get()
+      .then((snapshot) => {
+        const allPosts = snapshot.docs.map((product) => {
+          if (inp) {
+            if (product.data().name.toLowerCase().includes(inp.toLowerCase())) {
+              return {
+                ...product.data(),
+                id: product.id,
+              };
+            }
+          } else {
+            return {
+              ...product.data(),
+              id: product.id,
+            };
+          }
+        });
+        setProducts(allPosts);
+      });
+  }, [input, inp]);
 
 
   return (
@@ -51,34 +55,34 @@ useEffect(() => {
           <span>View more</span>
         </div>
         <div className="cardss">
-          {products.map((product)=>(
-            product?(
-              <div
-              key={product.id}
-            className="cards"
-            onClick={() => {
-              setPostDetails(product);
-              navigate('/view');
-            }}
-          >
-            <div className="favorite">
-              <Heart></Heart>
-            </div>
-            <div className="image">
-              <img src={product?.url} alt="" />
-            </div>
-            <div className="content">
-              <p className="rate">&#x20B9; {product?.price}</p>
-              <span className="kilometer">{product?.name}</span>
-              <p className="name">{product?.category} </p>
-            </div>
-            <div className="date">
-              <span>{product?.createdAt}</span>
-            </div>
-          </div>
-          ):null))}
-       
-               
+          {products.map((product) =>
+            product ? (
+              <div className="cards">
+                <div className="favorite" onClick={()=>{favorite(product.id)}}>
+                  <Heart></Heart>
+                </div>
+                <div
+                  key={product.id}
+                  onClick={() => {
+                    setPostDetails(product);
+                    navigate("/view");
+                  }}
+                >
+                  <div className="image">
+                    <img src={product?.url} alt="" />
+                  </div>
+                  <div className="content">
+                    <p className="rate">&#x20B9; {product?.price}</p>
+                    <span className="kilometer">{product?.name}</span>
+                    <p className="name">{product?.category} </p>
+                  </div>
+                  <div className="date">
+                    <span>{product?.createdAt}</span>
+                  </div>
+                </div>
+              </div>
+            ) : null
+          )}
         </div>
       </div>
       <div className="recommendations">

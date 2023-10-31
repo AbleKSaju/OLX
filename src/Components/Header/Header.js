@@ -13,18 +13,23 @@ function Header({productInput}) {
   const {user}=useContext(AuthContext)
   const {firebase}=useContext(FirebaseContext)
   const navigateToLogin=()=>{
-    console.log(user);
     if (!user) {
       navigate('/login')
     }else{
       console.log('userExist');
     }
   }
+  const navigateToCreate=()=>{
+    navigate('/create')
+  }
+  const navigateToHome=()=>{
+    navigate('/')
+  }
 
   return (
     <div className="headerParentDiv">
       <div className="headerChildDiv">
-        <div className="brandName">
+        <div className="brandName" onClick={navigateToHome}>
           <OlxLogo></OlxLogo>
         </div>
         <div className="placeSearch">
@@ -61,7 +66,7 @@ function Header({productInput}) {
           <SellButton></SellButton>
           <div className="sellMenuContent">
             <SellButtonPlus></SellButtonPlus>
-            <span>SELL</span>
+            <span onClick={navigateToCreate}>SELL</span>
           </div>
         </div>
       </div>

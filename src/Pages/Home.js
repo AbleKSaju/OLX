@@ -11,6 +11,10 @@ function  Home(props) {
   const productInput = (input) => {
     setInput(input);
   }
+  const [favorites,setFavorites]=useState('')
+  const favorite=(id)=>{
+    setFavorites(id)
+  }
   useEffect(()=>{
      productInput()
   },[])
@@ -19,7 +23,7 @@ function  Home(props) {
     <div className="homeParentDiv">
       <Header productInput={productInput}/>
       <Banner />
-      <Posts input={input}/>
+      <Posts input={input} favorite={favorite}/>
       <Footer />
     </div>
   );
