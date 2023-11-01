@@ -7,7 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { postContext } from "../../store/PostContext";
 import Shimmers from "../Shimmer/shimmer";
 
-function Posts({ input ,favorite}) {
+function Posts({ product, input, favorite }) {
+  console.log(product);
   const [inp, setInp] = useState("");
   useEffect(() => {
     if (input) {
@@ -16,10 +17,9 @@ function Posts({ input ,favorite}) {
       setInp("");
     }
   }, [input]);
-
-
   const { firebase } = useContext(FirebaseContext);
   const [products, setProducts] = useState([]);
+  const [count, setCount] = useState(0);
   const { setPostDetails } = useContext(postContext);
   const navigate = useNavigate();
 
@@ -43,11 +43,18 @@ function Posts({ input ,favorite}) {
               id: product.id,
             };
           }
-        });
+        }); 
+        const posts=allPosts.map((val)=>{
+          if(val?.name){
+            setCount(count+1)
+            return val
+          }else{
+            return 'Not'
+          }
+        })
         setProducts(allPosts);
       });
-  }, [input, inp]);
-
+  }, [inp, firebase,products]);
 
   return (
     <div className="postParentDiv">
@@ -57,35 +64,43 @@ function Posts({ input ,favorite}) {
           <span>View more</span>
         </div>
         <div className="cardss">
-          {products.length?products.map((product) =>
-            product ? (
-              <div className="cards">
-                <div className="favorite" onClick={()=>{favorite(product?.id)}}>
-                  <Heart></Heart>
+          {products.length ? (
+            products.map((product) =>
+              product ? (
+                <div className="cards">
+                  <div
+                    className="favorite"
+                    onClick={() => {
+                      favorite(product?.id);
+                    }}
+                  >
+                    <Heart></Heart>
+                  </div>
+                  <div
+                    key={product.id}
+                    onClick={() => {
+                      setPostDetails(product);
+                      navigate("/view");
+                    }}
+                  >
+                    <div className="image">
+                      <img src={product?.url} alt="" />
+                    </div>
+                    <div className="content">
+                      <p className="rate">&#x20B9; {product?.price}</p>
+                      <span className="kilometer">{product?.name}</span>
+                      <p className="name">{product?.category} </p>
+                    </div>
+                    <div className="date">
+                      <span>{product?.createdAt}</span>
+                    </div>
+                  </div>
                 </div>
-                <div
-                  key={product.id}
-                  onClick={() => {
-                    setPostDetails(product);
-                    navigate("/view");
-                  }}
-                >
-                  <div className="image">
-                    <img src={product?.url} alt="" />
-                  </div>
-                  <div className="content">
-                    <p className="rate">&#x20B9; {product?.price}</p>
-                    <span className="kilometer">{product?.name}</span>
-                    <p className="name">{product?.category} </p>
-                  </div>
-                  <div className="date">
-                    <span>{product?.createdAt}</span>
-                  </div>
-                </div>
-              </div>
-            ) :null
-          ): <Shimmers/>}
-
+              ) : null
+            )
+          ) : (
+            <Shimmers />
+          )}
         </div>
       </div>
       <div className="recommendations">

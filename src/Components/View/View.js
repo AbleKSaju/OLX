@@ -19,24 +19,24 @@ function View() {
           setUserDetails(doc.data());
         })
       })
-  },[])
+  },[postDetails,firebase])
   return (
-    <div className="viewParentDiv" key={postDetails.id}>
+    <div className="viewParentDiv" key={postDetails?.id}>
       <div className="imageShowDiv">
-        <img src={postDetails.url&&postDetails.url} alt="nop" className="ml-5" style={{width:'50rem'}} />
+        <img src={postDetails?.url&&postDetails?.url} alt="nop" className="ml-5" style={{width:'50rem'}} />
       </div>
       <div className="rightSection">
         <div className="productDetails">
-          <p>&#x20B9; {postDetails.price} </p>
-          <span>{postDetails.name}</span>
-          <p>{postDetails.category}</p>
-          <span>{postDetails.createdAt}</span>
+          <p>&#x20B9; {postDetails?.price} </p>
+          <span>{postDetails?.name}</span>
+          <p>{postDetails?.category}</p>
+          <span>{postDetails?.createdAt}</span>
         </div>
         {userDetails && (
           <div className="contactDetails">
             <p>Seller details</p>
-            <p>{userDetails.username}</p>
-            <p>{userDetails.phone}</p>
+            <p>{userDetails?.username}</p>
+            <p>{userDetails?.phone}</p>
           </div>
         )}
       </div>

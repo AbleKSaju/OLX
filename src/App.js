@@ -18,15 +18,15 @@ function App() {
       setUser(user);
     });
   });
-  const AddProduct=()=>{
-    console.log("Enterreee");
+  const AddProduct=(val)=>{
+    console.log("Product added");
     setProduct(!product)
   }
   return (
     <div>
       <Post>
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<Home product={product}/>} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/create" element={<Create AddProduct={AddProduct} /> } />

@@ -5,22 +5,18 @@ import { BrowserRouter } from "react-router-dom";
 import { FirebaseContext } from "./store/FireBaseContext";
 import { Context } from "./store/FireBaseContext";
 import firebase from "./firebase/config";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
-
-
-const root = ReactDOM.createRoot(document.getElementById("root"))
+const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  
-    <React.StrictMode>
-      <FirebaseContext.Provider value={{ firebase }}>
-          <BrowserRouter>
+  <React.StrictMode>
+    <FirebaseContext.Provider value={{ firebase }}>
+      <BrowserRouter>
         <Context>
-            <App />
+          <App />
         </Context>
-          </BrowserRouter>
-      </FirebaseContext.Provider>
-    </React.StrictMode>
-  
-)
+      </BrowserRouter>
+    </FirebaseContext.Provider>
+  </React.StrictMode>
+);

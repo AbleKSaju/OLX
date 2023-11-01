@@ -9,6 +9,9 @@ import SellButtonPlus from '../../assets/SellButtonPlus';
 import { AuthContext, FirebaseContext } from '../../store/FireBaseContext';
 import { useNavigate } from 'react-router-dom';
 function Header({productInput}) {
+  // const productInput=(id)=>{
+  //   console.log(id,'Idddd');
+  // }
   const navigate=useNavigate()
   const {user}=useContext(AuthContext)
   const {firebase}=useContext(FirebaseContext)
