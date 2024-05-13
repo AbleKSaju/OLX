@@ -18,6 +18,8 @@ function View() {
         res.forEach(doc => {
           setUserDetails(doc.data());
         })
+      }).catch((err)=>{
+        console.log(err,"err");
       })
   },[postDetails,firebase])
   return (

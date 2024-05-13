@@ -16,13 +16,18 @@ function Header({productInput}) {
   const {user}=useContext(AuthContext)
   const {firebase}=useContext(FirebaseContext)
   const navigateToLogin=()=>{
-    if (!user) {
+    console.log(user,"user");
+    console.log("I AM LOGIN");
+    if (!user || user == null) {
       navigate('/login')
     }else{
       console.log('userExist');
     }
   }
   const navigateToCreate=()=>{
+    console.log("CREAEate");
+    navigateToLogin()
+    console.log("CREAEate routing");
     navigate('/create')
   }
   const navigateToHome=()=>{

@@ -6,16 +6,13 @@ import Banner from '../Components/Banner/Banner';
 import Posts from '../Components/Posts/Posts';
 import Footer from '../Components/Footer/Footer';
 
-function  Home({product}) {
-
-  const [prod,setProduct]=useState(false)
+function  Home() {
+console.log("I am Home");
   const [input,setInput]=useState('')
   const productInput = (input) => {
     setInput(input);
   }
-  useEffect(()=>{
-    product && setProduct(!prod)
-  },[product])
+
   const [favorites,setFavorites]=useState('')
   const favorite=(id)=>{
     setFavorites(id)
@@ -24,13 +21,12 @@ function  Home({product}) {
   useEffect(()=>{
      productInput()
   },[])
-  console.log(prod,'proo');
  
   return (
     <div className="homeParentDiv">
       <Header productInput={productInput}/>
       <Banner />
-      <Posts product={prod} input={input} favorite={favorite}/>
+      <Posts  input={input} favorite={favorite}/>
       <Footer />
     </div>
   );

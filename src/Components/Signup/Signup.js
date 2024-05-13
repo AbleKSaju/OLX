@@ -13,30 +13,17 @@ export default function Signup() {
   const [userPassword,setUserPassword]=useState('')
   const {firebase} =useContext(FirebaseContext)
   const {register,handleSubmit,formState:{errors},reset} = useForm()
-  const handelSubmit=(e)=>{
-    e.preventDefault()
-      firebase.auth().createUserWithEmailAndPassword(userEmail,userPassword).then((result)=>{
-        result.user.updateProfile({displayName:username}).then(()=>{
-          firebase.firestore().collection('users').add({
-            id:result.user.uid,
-            username:username,
-            phone:userPhone
-          }).then(()=>{
-            navigate('/login')
-
-          })
-        })
-      })
-    }
   const submit=()=>{
     firebase.auth().createUserWithEmailAndPassword(userEmail,userPassword).then((result)=>{
       result.user.updateProfile({displayName:username}).then(()=>{
         firebase.firestore().collection('users').add({
-          id:result.user.uid,
+          id:result?.user?.uid,
           username:username,
           phone:userPhone
         }).then(()=>{
           navigate('/login')
+        }).catch((err)=>{
+          console.log(err,"err");
         })
       })
     })

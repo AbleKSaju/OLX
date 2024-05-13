@@ -7,8 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { postContext } from "../../store/PostContext";
 import Shimmers from "../Shimmer/shimmer";
 
-function Posts({ product, input, favorite }) {
-  console.log(product);
+function Posts({  input, favorite }) {
   const [inp, setInp] = useState("");
   useEffect(() => {
     if (input) {
@@ -19,42 +18,32 @@ function Posts({ product, input, favorite }) {
   }, [input]);
   const { firebase } = useContext(FirebaseContext);
   const [products, setProducts] = useState([]);
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
   const { setPostDetails } = useContext(postContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
+  const fetchProducts = () => {
+    console.log("fetchProducts");
     firebase
       .firestore()
       .collection("products")
       .get()
       .then((snapshot) => {
-        const allPosts = snapshot.docs.map((product) => {
-          if (inp) {
-            if (product.data().name.toLowerCase().includes(inp.toLowerCase())) {
-              return {
-                ...product.data(),
-                id: product.id,
-              };
-            }
-          } else {
-            return {
-              ...product.data(),
-              id: product.id,
-            };
-          }
-        }); 
-        const posts=allPosts.map((val)=>{
-          if(val?.name){
-            setCount(count+1)
-            return val
-          }else{
-            return 'Not'
-          }
-        })
-        setProducts(allPosts);
+        const allPosts = snapshot.docs.map((product) => ({
+          ...product.data(),
+          id: product.id,
+        }));
+        if(products.length!==allPosts.length){
+          setProducts(allPosts);
+        }
+      })
+      .catch((err) => {
+        console.log("Error fetching products:", err);
       });
-  }, [inp, firebase,products]);
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, [inp,products]);
 
   return (
     <div className="postParentDiv">
@@ -64,8 +53,8 @@ function Posts({ product, input, favorite }) {
           <span>View more</span>
         </div>
         <div className="cardss">
-          {products.length ? (
-            products.map((product) =>
+          {products?.length ? (
+            products?.map((product) =>
               product ? (
                 <div className="cards">
                   <div
@@ -74,7 +63,7 @@ function Posts({ product, input, favorite }) {
                       favorite(product?.id);
                     }}
                   >
-                    <Heart></Heart>
+                    {/* <Heart></Heart> */}
                   </div>
                   <div
                     key={product.id}

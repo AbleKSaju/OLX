@@ -31,6 +31,7 @@ function Login() {
   const navigateToSignup=()=>{
     history('/signup')
   }
+  console.log("I AM LOGIN PAGE");
   return (
     <div>
       <div className="loginParentDiv p-5">
